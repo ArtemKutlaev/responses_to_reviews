@@ -1,0 +1,6 @@
+.env
+data/*database.db
+models/*model.pkl
+models/*vectorizer.pkl
+**/__pycache__/
+venv/

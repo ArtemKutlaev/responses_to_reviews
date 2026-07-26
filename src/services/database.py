@@ -1,7 +1,10 @@
 import sqlite3
 import pandas as pd
 
-def init_db():
+def init_db()->None:
+    """Инициализирует базу данных: создает таблицу reviews_db,
+    если она еще не существует
+    """
     db = sqlite3.connect('data/database.db')
     c = db.cursor()
     c.execute('''
@@ -17,7 +20,10 @@ def init_db():
 if __name__ == '__main__':
     init_db()
     
-def is_valid_comment(text):
+def is_valid_comment(text)-> bool:
+    """Проверяет, является ли комментарий валидным 
+    (содержит больше двух уникальных слов).
+    """
     if not isinstance(text, str):
         return False
     if len(set(text.lower().split())) <= 2:
@@ -25,7 +31,7 @@ def is_valid_comment(text):
     return True
 
 with sqlite3.connect('data/database.db') as db:
-    data = pd.read_excel(r"C:\Users\User\OneDrive\Desktop\big_reviews.xlsx")
+    data = pd.read_excel('Ваша ссылка на excel')
     data = data.dropna(subset=["comment"])
     data = data.drop_duplicates(subset=["comment"])
     data = data[data['comment'].apply(is_valid_comment)]

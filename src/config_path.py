@@ -1,6 +1,6 @@
 from pathlib import Path
 
-
+#Корень проекта
 BASE_DIR = Path(__file__).resolve().parents[1]
 
 # 1. Путь к базе данных

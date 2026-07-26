@@ -6,6 +6,9 @@ from src.config_path import DB_PATH
 
 
 def get_prepared_data():
+    """Загружает данные из БД, выполняет препроцессинг, 
+     TF-IDF векторизацию и преобразует рейтинги в метки классов.
+    """
     db = sqlite3.connect(DB_PATH) 
     data = pd.read_sql_query(sql="SELECT * FROM reviews_db", con=db)
     db.close()
@@ -25,6 +28,6 @@ def get_prepared_data():
         else: return 2
 
     y = data['rating'].apply(rating_to_sentiment)
-    return X,y, vectorizer, data['comment']
+    return X,y, vectorizer
     
     

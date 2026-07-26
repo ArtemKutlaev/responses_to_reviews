@@ -13,17 +13,23 @@ def get_answer_yandex(review_text: str,name: str,product: str)->str:
     Returns:
         str: Текст ответа
     """
-    sdk = AIStudio(
-        folder_id=folder_id,
-        auth=api_key
-    )
-    model = (
-        sdk.models.completions("yandexgpt").configure(
-            temperature=0.6,
-            max_tokens = 300
+    try:
+        sdk = AIStudio(
+            folder_id=folder_id,
+            auth=api_key
         )
-    )
-    result = model.run(get_prompt(review_text,name,product))
-    return result[0].text
+        model = (
+            sdk.models.completions("yandexgpt").configure(
+                temperature=0.6,
+                max_tokens = 300
+            )
+        )
+        result = model.run(get_prompt(review_text,name,product))
+        if result and len(result)>0:
+            return result[0].text
+        else:
+            return 'Не удалось получить ответ от модели: пустой реузльтат'
+    except Exception as e:
+        print(f"Ошибка при запросе к YandexGPT: {e}")
 
 

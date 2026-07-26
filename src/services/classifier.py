@@ -2,9 +2,13 @@ import joblib
 from src.config_path import VECTORIZER_PATH,MODEL_PATH
 from src.ml.utils import preprocess_text
 
-
-model = joblib.load(MODEL_PATH)
-vectorizer = joblib.load(VECTORIZER_PATH)
+try:
+    model = joblib.load(MODEL_PATH)
+    vectorizer = joblib.load(VECTORIZER_PATH)
+except Exception as e:
+    model = None
+    vectorizer = None
+    print(f"Ошибка при загрузке модели или векторизатора: {e}")
 
 def predict_sentiment(text: str) -> str:
     """Функция, которая определяет тональность текста 

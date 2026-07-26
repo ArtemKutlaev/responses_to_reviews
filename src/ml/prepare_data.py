@@ -9,10 +9,12 @@ def get_prepared_data():
     """Загружает данные из БД, выполняет препроцессинг, 
      TF-IDF векторизацию и преобразует рейтинги в метки классов.
     """
-    db = sqlite3.connect(DB_PATH) 
-    data = pd.read_sql_query(sql="SELECT * FROM reviews_db", con=db)
-    db.close()
-
+    try:
+        with sqlite3.connect(DB_PATH) as db:
+            data = pd.read_sql_query(sql="SELECT * FROM reviews_db", con=db)
+    except Exception as e:
+        raise RuntimeError(f"Не удалось загрузить данные из базы: {e}")
+    
     data['clean_text_str'] = data['comment'].apply(preprocess_text)
 
     # векторизация

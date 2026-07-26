@@ -10,7 +10,7 @@ def get_prepared_data():
     data = pd.read_sql_query(sql="SELECT * FROM reviews_db", con=db)
     db.close()
 
-    data['clean_text_str'] = data['Comment'].apply(preprocess_text)
+    data['clean_text_str'] = data['comment'].apply(preprocess_text)
 
     # векторизация
     vectorizer = TfidfVectorizer(ngram_range=(1, 2), min_df=2, max_features=10000,max_df=0.9)
@@ -24,7 +24,7 @@ def get_prepared_data():
         #положительный
         else: return 2
 
-    y = data['Rating'].apply(rating_to_sentiment)
-    return X,y, vectorizer, data['Comment']
+    y = data['rating'].apply(rating_to_sentiment)
+    return X,y, vectorizer, data['comment']
     
     

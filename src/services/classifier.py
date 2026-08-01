@@ -2,6 +2,7 @@ import joblib
 from src.config_path import VECTORIZER_PATH,MODEL_PATH
 from src.ml.utils import preprocess_text
 
+
 try:
     model = joblib.load(MODEL_PATH)
     vectorizer = joblib.load(VECTORIZER_PATH)
@@ -20,10 +21,13 @@ def predict_sentiment(text: str) -> str:
     """
     cleaned_text = preprocess_text(text)
     vectorized_text = vectorizer.transform([cleaned_text])
-    prediction = model.predict(vectorized_text)[0]
-    if prediction == 0:
-        return 'Negative'
-    elif prediction == 1: 
-        return 'Neutral'
+    prediction = model.predict_proba(vectorized_text)[0]
+    pos_confidence = prediction[2]
+    neg_confidence = prediction[0]
+    
+    if pos_confidence >=0.85:
+        return "Positive"
+    elif neg_confidence >= 0.7:
+        return "Negative"
     else:
-        return 'Positive'
+        return "Neutral"    

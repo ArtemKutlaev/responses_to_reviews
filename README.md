@@ -26,7 +26,7 @@
 ## 🛠 Стек технологий
 
 * **Язык:** Python
-* **Машинное обучение:** Scikit-learn (RandomForest, TF-IDF), Pandas, NLTK, PyMorphy3
+* **Машинное обучение:** Scikit-learn (TF-IDF),CatBoost, Pandas, NLTK, PyMorphy3
 * **LLM:** Yandex AI Studio SDK (YandexGPT)
 * **Веб-интерфейс:** Streamlit
 * **Инструменты:** Joblib, python-dotenv
@@ -42,7 +42,7 @@ project/
 │   └── database.db             # База данных (создается при запуске src/services/database.py)
 │
 ├── models/
-│   ├── model.pkl               # Модель RandomForest (создается при запуске src/ml/train.py)
+│   ├── model.pkl               # Модель CatBoost (создается при запуске src/ml/train.py)
 │   └── vectorizer.pkl          # Векторизатор TfidfVectorizer (создается при запуске src/ml/train.py)
 │
 ├── src/
@@ -128,6 +128,6 @@ streamlit run main.py
 * **Тестирование:** Внедрение модульных тестов с помощью `pytest`.
 * **Контейнеризация:** Добавление поддержки `Docker` для быстрого развертывания проекта в любой среде.
 * **Логирование ответов:** Создание специализированной базы данных для автоматического сохранения входящих отзывов (полученных через интерфейс Streamlit), предсказанных моделью оценок и сгенерированных ответов.
-* **Изменение модели ML** Изменение модели со случайного леса на градиентный бустинг, добавление RandomizedSearchCV для выжимания максимум из алгоритма.
+* **Изменение модели ML** Добавление RandomizedSearchCV для выжимания максимум из алгоритма.
 
 

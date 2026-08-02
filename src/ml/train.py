@@ -1,19 +1,20 @@
 from sklearn.model_selection import train_test_split
 from src.ml.prepare_data import get_prepared_data
 from sklearn.metrics import accuracy_score,classification_report,confusion_matrix,ConfusionMatrixDisplay
-from sklearn.ensemble import RandomForestClassifier
+from catboost import CatBoostClassifier
 import joblib
 from src.config_path import MODEL_PATH,VECTORIZER_PATH
 import matplotlib.pyplot as plt
 
 
-def train_model(X_train,y_train) -> RandomForestClassifier:
-    """Обучает модель Random Forest на тренировочных данных."""
-    model = RandomForestClassifier(
-        n_estimators=100,
-        max_depth=100,
-        random_state=1,
-        n_jobs=-1
+def train_model(X_train,y_train) -> CatBoostClassifier:
+    """Обучает CatBoostClassifier на тренировочных данных."""
+    model = CatBoostClassifier(
+        iterations=400,
+        learning_rate= 0.1,
+        depth=8,
+        l2_leaf_reg=3,
+        silent=True 
     )
     model.fit(X_train,y_train)
     return model

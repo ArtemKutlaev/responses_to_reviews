@@ -4,3 +4,4 @@ models/*model.pkl
 models/*vectorizer.pkl
 **/__pycache__/
 venv/
+catboost_info/

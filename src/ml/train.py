@@ -5,19 +5,36 @@ from catboost import CatBoostClassifier
 import joblib
 from src.config_path import MODEL_PATH,VECTORIZER_PATH
 import matplotlib.pyplot as plt
+from sklearn.model_selection import RandomizedSearchCV
 
 
 def train_model(X_train,y_train) -> CatBoostClassifier:
-    """Обучает CatBoostClassifier на тренировочных данных."""
+    """Обучает CatBoostClassifier на тренировочных данных, предварительно подберая лучшие гиперпараметры с помощью RandomizedSearchCV """
+    param_dist = {
+        'iterations' : [200,300,500,700,800,900],
+        'depth' : [4,6,8],
+        'learning_rate' : [0.01,0.03,0.05,0.1,0.2,0.3],
+        'l2_leaf_reg' : [1,3,5]
+    }
     model = CatBoostClassifier(
-        iterations=400,
-        learning_rate= 0.1,
-        depth=8,
-        l2_leaf_reg=3,
-        silent=True 
+        loss_function='MultiClass',
+        random_seed=1,
+        silent=True,
+        task_type='GPU'
     )
-    model.fit(X_train,y_train)
-    return model
+    model_hpo = RandomizedSearchCV(
+        model,
+        param_distributions=param_dist,
+        n_iter = 10,
+        cv =3,
+        scoring = 'f1_macro',
+        n_jobs=1,
+        verbose=2
+    )
+    
+    model_hpo.fit(X_train,y_train)
+    print(f'Лучшие параметры: {model_hpo.best_params_}')
+    return model_hpo.best_estimator_
 
 def evaluate_model(model, X_test,y_test) -> None: 
     """Функция,которая оценивает модель,выводит метрики и строит матрицу ошибок"""

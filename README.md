@@ -34,41 +34,45 @@
 ---
 
 ## 📁 Структура проекта
-
-```text
 project/
 │
-├── data/                       # Папка для базы данных
-│   └── database.db             # База данных (создается при запуске src/services/database.py)
+├── data/                       # Данные приложения
+│   ├── .gitkeep
+│   └── database.db             # База данных(создается при запуске src/services/database.py)
 │
-├── models/
-│   ├── model.pkl               # Модель CatBoost (создается при запуске src/ml/train.py)
-│   └── vectorizer.pkl          # Векторизатор TfidfVectorizer (создается при запуске src/ml/train.py)
+├── models/                     # Обученные ML-модели
+│   ├── .gitkeep
+│   ├── model.pkl               # Обученная модель CatBoost(создается при запуске src/ml/train.py)
+│   └── vectorizer.pkl          # Обученный TfidfVectorizer(создается при запуске src/ml/train.py)
 │
 ├── src/
-│   ├── ml/
-│   │   ├── prepare_data.py 
-│   │   ├── train.py
-│   │   └── utils.py
+│   ├── ml/                     # Модуль машинного обучения
+│   │   ├── prepare_data.py     
+│   │   ├── train.py            
+│   │   └── utils.py            
 │   │
-│   ├── services/
-│   │   ├── templates/
+│   ├── services/               # Основная бизнес-логика
+│   │   ├── templates/          
 │   │   │   ├── answers.py
 │   │   │   └── prompt.py
-│   │   ├── classifier.py
-│   │   ├── database.py
-│   │   ├── llm.py
-│   │   └── response_service.py
+│   │   ├── classifier.py       
+│   │   ├── database.py        
+│   │   ├── llm.py              
+│   │   └── response_service.py 
 │   │
-│   ├── config_path.py
-│   └── config.py
+│   ├── config_path.py          # Пути к файлам проекта
+│   └── config.py               # Конфигурация и переменные окружения
+│
+├── tests/                      # Автоматические тесты
+│   └── test_utils.py           
 │
 ├── .env.example                # Пример файла конфигурации
-├── .gitignore 
+├── .gitignore                  
+├── .dockerignore               
+├── Dockerfile                  
 ├── main.py                     # Главный файл запуска приложения
 ├── README.md                   # Документация проекта
 └── requirements.txt            # Зависимости проекта
-```
 
 ---
 
@@ -136,9 +140,11 @@ docker run --rm -p 8501:8501 --env-file .env wb-reviews
 ```
 После запуска в терминале появится ссылка Local URL. Откройте её в браузере.
 
-## 🎯 Ближайшие планы (Roadmap)
-* **Тестирование:** Внедрение модульных тестов с помощью `pytest`.
-
+### Тесты Pytest
+Для запуска автоматических тестов выполните:
+```bash
+python -m pytest -v
+```
 
 
 

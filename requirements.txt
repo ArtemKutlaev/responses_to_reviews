@@ -8,3 +8,4 @@ streamlit==1.60.0
 yandex-ai-studio-sdk==0.22.1
 matplotlib==3.11.1
 catboost==1.2.10
+pytest==9.1.1

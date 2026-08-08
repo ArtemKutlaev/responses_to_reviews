@@ -5,3 +5,4 @@ models/*vectorizer.pkl
 **/__pycache__/
 venv/
 /catboost_info/
+/.pytest_cache/

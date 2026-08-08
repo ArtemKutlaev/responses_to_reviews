@@ -1,0 +1,6 @@
+.env
+**/__pycache__/
+venv/
+/catboost_info/
+.gitignore
+.dockerignore
